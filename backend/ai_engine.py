@@ -208,7 +208,12 @@ async def call_gemini_api(api_key: str, prompt: str) -> str:
     async with httpx.AsyncClient(timeout=35.0) as client:
         response = await client.post(
             url,
-            json={"contents": [{"parts": [{"text": prompt}]}]}
+            json={
+                "contents": [{"parts": [{"text": prompt}]}],
+                "generationConfig": {
+                    "responseMimeType": "application/json"
+                }
+            }
         )
         if response.status_code != 200:
             raise Exception(f"Gemini API status code: {response.status_code}. Response: {response.text}")
@@ -227,7 +232,8 @@ async def call_grok_api(api_key: str, prompt: str) -> str:
             headers=headers,
             json={
                 "model": "grok-2",
-                "messages": [{"role": "user", "content": prompt}]
+                "messages": [{"role": "user", "content": prompt}],
+                "response_format": {"type": "json_object"}
             }
         )
         if response.status_code != 200:
@@ -247,13 +253,15 @@ async def call_openai_api(api_key: str, prompt: str) -> str:
             headers=headers,
             json={
                 "model": "gpt-4o-mini",
-                "messages": [{"role": "user", "content": prompt}]
+                "messages": [{"role": "user", "content": prompt}],
+                "response_format": {"type": "json_object"}
             }
         )
         if response.status_code != 200:
             raise Exception(f"OpenAI API status code: {response.status_code}. Response: {response.text}")
         data = response.json()
         return data["choices"][0]["message"]["content"]
+
 
 def get_api_key_pool(env_list_var: str, fallback_var: str = None) -> List[str]:
     raw = os.getenv(env_list_var, "")
@@ -376,12 +384,40 @@ async def query_llm_chain(topic: str, mode: str, client_keys: Dict[str, str] = N
     return generate_procedural_fallback(topic)
 
 def parse_json_from_llm(text: str) -> Dict[str, Any]:
-    clean_text = text.strip()
-    if clean_text.startswith("```json"):
-        clean_text = clean_text[7:]
-    elif clean_text.startswith("```"):
-        clean_text = clean_text[3:]
-    if clean_text.endswith("```"):
-        clean_text = clean_text[:-3]
-    clean_text = clean_text.strip()
-    return json.loads(clean_text)
+    # 1. Try parsing directly first
+    try:
+        clean_text = text.strip()
+        if clean_text.startswith("```json"):
+            clean_text = clean_text[7:]
+        elif clean_text.startswith("```"):
+            clean_text = clean_text[3:]
+        if clean_text.endswith("```"):
+            clean_text = clean_text[:-3]
+        clean_text = clean_text.strip()
+        return json.loads(clean_text, strict=False)
+    except Exception:
+        pass
+
+    # 2. Extract JSON by matching first '{' and last '}'
+    start_idx = text.find("{")
+    end_idx = text.rfind("}")
+    if start_idx == -1 or end_idx == -1:
+        raise Exception(f"No valid JSON object found in response: {text}")
+    
+    clean_text = text[start_idx:end_idx+1]
+    
+    # 3. Strip comments
+    lines = []
+    for line in clean_text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("//"):
+            continue
+        lines.append(line)
+    clean_text = "\n".join(lines)
+    
+    try:
+        return json.loads(clean_text, strict=False)
+    except json.JSONDecodeError as e:
+        print(f"[Parser] Failed to parse JSON: {str(e)}. Clean text segment: {clean_text[:500]}...", flush=True)
+        raise e
+
