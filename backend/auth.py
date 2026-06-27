@@ -38,7 +38,11 @@ def create_access_token(subject: Union[str, Any], expires_delta: int = None) -> 
     encoded_jwt = jwt.encode(to_encode, JWT_SECRET, algorithm=ALGORITHM)
     return encoded_jwt
 
-def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)) -> User:
+class UserSession:
+    def __init__(self, username: str):
+        self.username = username
+
+def get_current_user(token: str = Depends(oauth2_scheme)) -> UserSession:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -56,7 +60,5 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     except JWTError:
         raise credentials_exception
         
-    user = db.query(User).filter(User.username == username).first()
-    if user is None:
-        raise credentials_exception
-    return user
+    return UserSession(username=username)
+
