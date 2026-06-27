@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MentorAI - A premium, highly interactive gamified AI Tutor and learning roadmap generator.">
+  <title>MentorAI | Learn Until You Understand</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Atmospheric Glowing Orbs -->
+  <div class="bg-glow bg-glow-purple"></div>
+  <div class="bg-glow bg-glow-blue"></div>
+  <div class="bg-glow bg-glow-green"></div>
+
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <span class="brand-name">MentorAI</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-view="dashboard" id="nav-dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-item" data-view="tutor" id="nav-tutor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V3a2.5 2.5 0 0 1 2.5-2.5H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5z"/></svg>
+          <span>AI Teacher</span>
+        </button>
+        <button class="nav-item" data-view="roadmap" id="nav-roadmap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><path d="M18 9v6M9 6h6M6 9v6"/></svg>
+          <span>Roadmaps</span>
+        </button>
+        <button class="nav-item" data-view="quiz" id="nav-quiz">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span>Quiz Arena</span>
+        </button>
+        <button class="nav-item" data-view="vault" id="nav-vault">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          <span>Vault & Slides</span>
+        </button>
+        <button class="nav-item" data-view="router" id="nav-router">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+          <span>LLM Router</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="settings-trigger-btn" id="btn-settings-trigger" title="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span>Settings</span>
+        </button>
+        <div class="user-pill">
+          <div class="user-avatar" id="avatar-display">S</div>
+          <div class="user-info">
+            <span class="user-name" id="user-name-display">Student</span>
+            <span class="user-rank" id="user-rank-display">Beginner</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Action Bar -->
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <h2 class="view-title" id="current-view-title">Dashboard</h2>
+          <span class="view-subtitle" id="current-view-subtitle">Welcome back, Scholar!</span>
+        </div>
+        <div class="top-bar-right">
+          <!-- Drive Sync Indicator Button -->
+          <button class="header-action-btn drive-sync-btn" id="btn-drive-sync-status" title="Google Drive Auto-Sync Active">
+            <svg class="icon-spin-hover" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+            <span class="sync-dot"></span>
+            <span class="btn-text">Drive Synced</span>
+          </button>
+          
+          <!-- Quick Status Stats -->
+          <div class="status-stats">
+            <div class="stat-pill" title="Daily Streak">
+              <span class="emoji">🔥</span>
+              <span class="value" id="top-streak-count">5d</span>
+            </div>
+            <div class="stat-pill" title="Coins">
+              <span class="emoji">🪙</span>
+              <span class="value" id="top-coins-count">125</span>
+            </div>
+            <div class="stat-pill xp-pill" title="XP (Level)">
+              <span class="value" id="top-xp-count">1420 XP</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- VIEW: Dashboard -->
+      <section class="content-view active" id="view-dashboard">
+        <div class="dashboard-grid">
+          <!-- Welcome and Focus Card -->
+          <div class="card premium-hero-card">
+            <div class="hero-content">
+              <h3>Today's Learning Mission</h3>
+              <p class="hero-description" id="dashboard-learning-mission">Finish the "Introduction to Binary Search" module and conquer the boss to keep your streak alive!</p>
+              <button class="btn btn-primary" id="dashboard-resume-btn">
+                <span>Continue Lesson</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
+            </div>
+            <div class="hero-illustration">
+              <!-- Animated Ring Progress -->
+              <div class="hero-progress-ring">
+                <svg class="ring-svg" width="120" height="120">
+                  <circle class="ring-circle-bg" cx="60" cy="60" r="50" stroke-width="8" fill="transparent"/>
+                  <circle class="ring-circle-progress" id="dashboard-progress-ring" cx="60" cy="60" r="50" stroke-width="8" fill="transparent"/>
+                </svg>
+                <div class="ring-center">
+                  <span class="ring-percent" id="dashboard-progress-pct">60%</span>
+                  <span class="ring-label">Daily Goal</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Streak & XP Cards -->
+          <div class="card streak-mini-card">
+            <div class="card-icon flame-glow">🔥</div>
+            <div class="card-data">
+              <span class="label">Study Streak</span>
+              <span class="value" id="dash-streak-days">5 Days</span>
+              <span class="subtext">Next reward at 7 days!</span>
+            </div>
+          </div>
+
+          <div class="card coin-mini-card">
+            <div class="card-icon coin-glow">🪙</div>
+            <div class="card-data">
+              <span class="label">Mentor Coins</span>
+              <span class="value" id="dash-coins">125</span>
+              <span class="subtext">Use in AI custom modes</span>
+            </div>
+          </div>
+
+          <div class="card level-mini-card">
+            <div class="card-icon trophy-glow">🏆</div>
+            <div class="card-data">
+              <span class="label">Current Tier</span>
+              <span class="value" id="dash-level">Level 3 (Scholar)</span>
+              <span class="subtext"><span id="dash-next-xp">80</span> XP to Level 4</span>
+            </div>
+          </div>
+
+          <!-- Leaderboard Panel -->
+          <div class="card leaderboard-card grid-col-2">
+            <div class="card-header">
+              <h4 class="card-title">Weekly Leaderboard</h4>
+              <span class="card-action">Global</span>
+            </div>
+            <div class="leaderboard-list" id="leaderboard-items">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- Daily Missions -->
+          <div class="card missions-card">
+            <div class="card-header">
+              <h4 class="card-title">Daily Missions</h4>
+              <span class="badge" id="missions-completed-count">1/3 Done</span>
+            </div>
+            <div class="missions-list" id="dashboard-missions">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- Retention Tracker & Weak Topics -->
+          <div class="card weak-topics-card">
+            <div class="card-header">
+              <h4 class="card-title">Retention Monitor</h4>
+            </div>
+            <div class="weak-topics-content">
+              <p class="section-desc">Weak items requiring focus & spaced repetition:</p>
+              <div class="topics-pills" id="dashboard-weak-topics">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Stats Panel -->
+          <div class="card stats-summary-card">
+            <div class="card-header">
+              <h4 class="card-title">Performance Analytics</h4>
+            </div>
+            <div class="stats-pills-row">
+              <div class="stat-item">
+                <span class="val" id="analytics-accuracy">78%</span>
+                <span class="lbl">Quiz Accuracy</span>
+              </div>
+              <div class="stat-item">
+                <span class="val" id="analytics-time">4.2h</span>
+                <span class="lbl">Time Studied</span>
+              </div>
+              <div class="stat-item">
+                <span class="val" id="analytics-lessons">12</span>
+                <span class="lbl">Lessons Finished</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: AI Teacher (Lesson Studio) -->
+      <section class="content-view" id="view-tutor">
+        <div class="lesson-studio-layout">
+          <!-- Left Chat/Input Area -->
+          <div class="lesson-chat-container">
+            <div class="studio-header">
+              <div class="input-glow-wrapper">
+                <input type="text" id="tutor-topic-input" placeholder="Type a topic (e.g. Binary Search, React Components, UPSC History)...">
+                <button class="btn btn-primary" id="btn-start-teaching">
+                  <span>Teach Me</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                  </svg>
+                </button>
+              </div>
+              <div class="mode-ribbon">
+                <span class="ribbon-label">Mode:</span>
+                <div class="mode-select-wrapper">
+                  <select id="select-learning-mode">
+                    <option value="eli5">Explain Like I'm 10 (ELI5)</option>
+                    <option value="professor" selected>College Professor (Standard)</option>
+                    <option value="interview">Interview Prep Mode</option>
+                    <option value="story">Story Mode (Fantasy Quest)</option>
+                    <option value="feynman">Feynman Technique (Teach back)</option>
+                    <option value="coding">Coding Mode (Hands-on)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dialogue History / Explanations -->
+            <div class="chat-viewport" id="tutor-chat-viewport">
+              <div class="chat-msg system-msg">
+                <div class="avatar">🤖</div>
+                <div class="message-content">
+                  <p>Welcome! I am your <strong>MentorAI Personal Teacher</strong>. Unlike standard chatbots, I build structured roadmaps, assess your understanding step-by-step, explain topics visually, and design active exercises to help you master concepts.</p>
+                  <p>To begin, type a topic you wish to study above (e.g., <em>Binary Search</em> or <em>React Hooks</em>) and choose your preferred explanation mode.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Teacher Controls -->
+            <div class="chat-input-controls" id="tutor-chat-controls" style="display: none;">
+              <input type="text" id="tutor-user-reply" placeholder="Ask a follow-up or reply to the question...">
+              <button class="btn btn-secondary btn-icon" id="btn-tutor-send" title="Send Reply">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Content Visualizer Area -->
+          <div class="lesson-visualizer-container">
+            <div class="tabs-header">
+              <button class="tab-btn active" data-tab="tab-board">Interactive Whiteboard</button>
+              <button class="tab-btn" data-tab="tab-notes">Live Notes & Outline</button>
+            </div>
+            
+            <div class="tab-viewport">
+              <!-- Tab: Whiteboard -->
+              <div class="tab-panel active" id="tab-board">
+                <div class="whiteboard-card">
+                  <div class="whiteboard-header">
+                    <span class="title">Visual Whiteboard</span>
+                    <div class="controls">
+                      <span class="badge" id="board-rendering-status">Idle</span>
+                    </div>
+                  </div>
+                  <div class="whiteboard-canvas" id="whiteboard-canvas-container">
+                    <div class="empty-state">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M20.4 14.5L16 10 4 20"/>
+                      </svg>
+                      <p>Start a lesson to generate interactive graphs, structures, and math equations.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tab: Notes -->
+              <div class="tab-panel" id="tab-notes">
+                <div class="notes-panel-content">
+                  <div class="notes-header-actions">
+                    <span class="title">Generated Study Sheets</span>
+                    <div class="action-buttons" style="display: flex; gap: 8px;">
+                      <button class="btn btn-sm btn-success" id="btn-complete-node" disabled style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; font-weight: 600;">
+                        <span>Mark Module Completed ✅</span>
+                      </button>
+                      <button class="btn btn-sm btn-secondary" id="btn-download-vault-notes" disabled>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                        <span>Download Doc</span>
+                      </button>
+                      <button class="btn btn-sm btn-secondary" id="btn-download-vault-notes-md" disabled>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                        <span>Markdown</span>
+                      </button>
+                      <button class="btn btn-sm btn-secondary" id="btn-make-ppt" disabled>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"/><polygon points="12 7 17 12 12 17 12 7"/></svg>
+                        <span>Generate PPT</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="markdown-preview-area" id="live-notes-markdown-view">
+                    <div class="empty-state">
+                      <p>No active notes generated yet. Initiate a topic above to compile markdown notes in real time.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: Roadmap Viewer -->
+      <section class="content-view" id="view-roadmap">
+        <div class="card roadmap-container-card">
+          <div class="card-header">
+            <div>
+              <h4 class="card-title">Interactive Learning Roadmap</h4>
+              <p class="section-desc">Complete nodes sequentially to advance. Click an unlocked node to launch its lesson.</p>
+            </div>
+            <div class="roadmap-stats">
+              <span class="badge" id="roadmap-topic-badge">No active topic</span>
+              <span class="badge badge-success" id="roadmap-completion-pct">0% Complete</span>
+            </div>
+          </div>
+
+          <div class="roadmap-canvas-wrapper">
+            <div class="roadmap-nodes-container" id="roadmap-nodes-draw">
+              <!-- Roadmap nodes are dynamically drawn here -->
+              <div class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                <p>Generate a roadmap in the <strong>AI Teacher</strong> tab to see your visual curriculum path.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: Quiz Arena (with Boss Battles) -->
+      <section class="content-view" id="view-quiz">
+        <div class="quiz-arena-layout">
+          <!-- Boss Battle Stats Display -->
+          <div class="card boss-battle-header" id="quiz-boss-card" style="display: none;">
+            <div class="boss-entity">
+              <div class="boss-avatar animated-bounce">👹</div>
+              <div class="entity-details">
+                <span class="entity-title" id="quiz-boss-name">Binary Behemoth</span>
+                <span class="entity-subtitle">Chapter Guard</span>
+                <div class="health-bar-container">
+                  <div class="health-bar-fill boss-hp" id="quiz-boss-hp-bar" style="width: 100%;"></div>
+                  <span class="health-text" id="quiz-boss-hp-text">100/100 HP</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="vs-badge">VS</div>
+
+            <div class="player-entity">
+              <div class="entity-details text-right">
+                <span class="entity-title" id="quiz-player-name">You (Scholar)</span>
+                <span class="entity-subtitle">Active Shield</span>
+                <div class="health-bar-container">
+                  <div class="health-bar-fill player-hp" id="quiz-player-hp-bar" style="width: 100%;"></div>
+                  <span class="health-text" id="quiz-player-hp-text">3/3 Hearts</span>
+                </div>
+              </div>
+              <div class="player-avatar">🧙‍♂️</div>
+            </div>
+          </div>
+
+          <!-- Question Card -->
+          <div class="card quiz-question-card">
+            <div class="quiz-progress-bar">
+              <div class="quiz-progress-fill" id="quiz-progress-fill" style="width: 0%;"></div>
+            </div>
+
+            <div class="question-header">
+              <span class="question-number" id="quiz-q-num">Question 1 of 5</span>
+              <span class="difficulty-tag medium" id="quiz-q-diff">Medium</span>
+            </div>
+
+            <div class="question-body">
+              <p class="question-text" id="quiz-q-text">Generate or load a quiz to test your mastery! Go to the AI Teacher or start a quick challenge.</p>
+              <div class="question-code-block" id="quiz-q-code-container" style="display: none;">
+                <pre><code id="quiz-q-code"></code></pre>
+              </div>
+            </div>
+
+            <!-- Quiz Option Lists -->
+            <div class="quiz-options-grid" id="quiz-options-container">
+              <!-- Populated by JS -->
+            </div>
+
+            <div class="quiz-actions">
+              <button class="btn btn-secondary" id="btn-quiz-hint">💡 Need a Hint (-10 Coins)</button>
+              <button class="btn btn-primary" id="btn-quiz-action" disabled>Check Answer</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Success overlay card for post-quiz victory -->
+        <div class="quiz-overlay" id="quiz-overlay-screen" style="display: none;">
+          <div class="card reward-summary-card text-center animated-pop">
+            <h2 class="victory-title" id="quiz-victory-title">🎉 Victory!</h2>
+            <p id="quiz-victory-subtitle">You have defeated the Binary Behemoth and synchronized your scores.</p>
+            <div class="rewards-loot">
+              <div class="loot-item">
+                <span class="val" id="loot-xp">+100</span>
+                <span class="lbl">XP Earned</span>
+              </div>
+              <div class="loot-item">
+                <span class="val" id="loot-coins">+25</span>
+                <span class="lbl">Coins Found</span>
+              </div>
+            </div>
+            <button class="btn btn-primary" id="btn-quiz-close-victory">Back to Dashboard</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: Vault & Slides -->
+      <section class="content-view" id="view-vault">
+        <div class="vault-layout">
+          <!-- Left side: List of files -->
+          <div class="card vault-list-card">
+            <div class="card-header">
+              <h4 class="card-title">Study Vault</h4>
+              <button class="btn btn-sm btn-secondary" id="btn-import-csv-trigger">Import ZenTask CSV</button>
+            </div>
+            <div class="vault-list-container" id="vault-files-list">
+              <!-- Populated dynamically by JS -->
+            </div>
+          </div>
+
+          <!-- Right side: File Inspector & Slide Generator Mock -->
+          <div class="card file-inspector-card">
+            <div class="card-header">
+              <h4 class="card-title" id="inspector-file-title">File Inspector</h4>
+              <span class="badge" id="inspector-file-type">Empty</span>
+            </div>
+            <div class="inspector-viewport" id="inspector-file-content">
+              <div class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                </svg>
+                <p>Select a file from your Vault to preview nodes, markdown code, or compiled slide PPT decks.</p>
+              </div>
+            </div>
+            <!-- Slide presentation mock view -->
+            <div class="slide-presenter-overlay" id="slide-presenter-viewport" style="display: none;">
+              <div class="slide-frame">
+                <div class="slide-content-area" id="slide-text-content">
+                  <!-- Rendered dynamically -->
+                </div>
+                <div class="slide-nav">
+                  <button class="btn btn-sm btn-secondary" id="btn-prev-slide">Previous</button>
+                  <span id="slide-counter">Slide 1 of 5</span>
+                  <button class="btn btn-sm btn-secondary" id="btn-next-slide">Next</button>
+                </div>
+              </div>
+              <button class="btn btn-sm btn-secondary close-presenter-btn" id="btn-close-presenter">Close Presentation</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: LLM Router Controls & Logs -->
+      <section class="content-view" id="view-router">
+        <div class="router-dashboard-grid">
+          <!-- Active Router Status and Live Charts -->
+          <div class="card router-stats-card grid-col-2">
+            <div class="card-header">
+              <h4 class="card-title">Multi-LLM Real-time Routing Metrics</h4>
+              <span class="pulse-indicator glow-green">Routing Engine Active</span>
+            </div>
+            <div class="router-chart-layout">
+              <div class="chart-col">
+                <h5>Average Latency (ms)</h5>
+                <div class="bar-chart-container" id="chart-latency">
+                  <!-- Dynamic bars -->
+                </div>
+              </div>
+              <div class="chart-col">
+                <h5>Approx. Cost per 1K Tokens ($)</h5>
+                <div class="bar-chart-container" id="chart-cost">
+                  <!-- Dynamic bars -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Routing & Provider Mode Selection -->
+          <div class="card router-keys-card">
+            <div class="card-header">
+              <h4 class="card-title">LLM Provider Routing Settings</h4>
+            </div>
+            <div class="keys-inputs-list">
+              <p class="section-desc">Configure how MentorAI orchestrates multi-LLM routing, failover cascades, and prompt latency/cost optimization.</p>
+              <div class="form-group">
+                <label for="select-routing-strategy">Active Routing Strategy</label>
+                <select id="select-routing-strategy" style="background: var(--bg-tertiary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-md); color: #fff; outline: none; font-family: var(--font-body); font-size: 0.85rem;">
+                  <option value="adaptive" selected>🧠 Adaptive Smart Routing (Recommended)</option>
+                  <option value="latency">⚡ Latency Optimizer (Forces Groq/DeepSeek)</option>
+                  <option value="cost">🪙 Cost Minimizer (Forces Gemini Flash)</option>
+                  <option value="reasoning">📚 Max Reasoning Mode (Forces GPT-4o/Claude)</option>
+                </select>
+              </div>
+              <div class="form-group row-align">
+                <label for="check-allow-failover">Enable Automatic Fallback & Failover</label>
+                <input type="checkbox" id="check-allow-failover" checked>
+              </div>
+              <p class="section-desc" style="font-size: 0.7rem; color: var(--text-muted); margin-top: 6px;">
+                Note: In production, API keys are held securely in server-level environment variables (e.g. <code>GEMINI_API_KEY</code>). System calls rotate automatically if a provider experiences timeout errors or rate limits.
+              </p>
+            </div>
+          </div>
+
+          <!-- Failover Log Console -->
+          <div class="card router-logs-card grid-col-2">
+            <div class="card-header">
+              <h4 class="card-title">Routing Failover & Request Logs</h4>
+              <button class="btn btn-sm btn-secondary" id="btn-clear-router-logs">Clear Logs</button>
+            </div>
+            <div class="console-log-viewport" id="router-logs-console">
+              <div class="console-line info">[System] MentorAI Router online. Available fallbacks: Gemini -> OpenAI -> DeepSeek.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- MODAL: Settings -->
+  <div class="modal-backdrop" id="modal-settings">
+    <div class="card modal-card animated-pop">
+      <div class="modal-header">
+        <h3>User Learning Profile Settings</h3>
+        <button class="btn-close-modal" id="btn-close-settings">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="settings-username">Username</label>
+          <input type="text" id="settings-username" value="Scholar">
+        </div>
+        <div class="form-group">
+          <label for="settings-speed">Learning Speed</label>
+          <select id="settings-speed">
+            <option value="slow">Steady & Detailed (Slower pace)</option>
+            <option value="normal" selected>Moderate (Standard pace)</option>
+            <option value="fast">Fast & Summary-focused (Sprint pace)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="settings-language">Preferred Language</label>
+          <select id="settings-language">
+            <option value="en" selected>English</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="hi">Hindi</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="settings-goal">Daily Learning Goal (minutes)</label>
+          <input type="number" id="settings-goal" value="20" min="5" max="180">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-settings-cancel">Cancel</button>
+        <button class="btn btn-primary" id="btn-settings-save">Save Profile</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Import CSV -->
+  <div class="modal-backdrop" id="modal-import-csv">
+    <div class="card modal-card animated-pop">
+      <div class="modal-header">
+        <h3>Import ZenTask CSV Backup</h3>
+        <button class="btn-close-modal" id="btn-close-import-csv">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="desc">Import task items from a ZenTask CSV export file. Existing weak topics or lessons will merge.</p>
+        <div class="drop-zone" id="csv-drop-zone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+          </svg>
+          <p>Drag and drop <strong>ZenTask_Export.csv</strong> here or click to select</p>
+          <input type="file" id="csv-file-input" accept=".csv" style="display: none;">
+          <span class="file-name-label" id="csv-file-name" style="display: none;">No file selected</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-import-csv-cancel">Cancel</button>
+        <button class="btn btn-primary" id="btn-import-csv-execute" disabled>Execute Import</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Auth (Login/Register) -->
+  <div class="modal-backdrop active" id="modal-auth">
+    <div class="card modal-card animated-pop" style="max-width: 400px;">
+      <div class="modal-header" style="justify-content: center; margin-bottom: 10px;">
+        <h2 style="font-family: var(--font-display); font-weight: 800; font-size: 1.8rem; background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">MentorAI</h2>
+      </div>
+      <div class="modal-body" id="auth-login-view">
+        <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; text-align: center; color: var(--text-primary);">Welcome back, Scholar!</h3>
+        <div class="form-group">
+          <label for="login-username">Username</label>
+          <input type="text" id="login-username" placeholder="Enter your username">
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="Enter your password">
+        </div>
+        <button class="btn btn-primary" id="btn-login-execute" style="width: 100%; margin-top: 14px;">Sign In</button>
+        <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 14px;">New to MentorAI? <a href="#" id="link-to-register" style="color: var(--primary-hover); text-decoration: none; font-weight: 600;">Create an account</a></p>
+      </div>
+      <div class="modal-body" id="auth-register-view" style="display: none;">
+        <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; text-align: center; color: var(--text-primary);">Start your learning quest</h3>
+        <div class="form-group">
+          <label for="register-username">Username</label>
+          <input type="text" id="register-username" placeholder="Choose a username">
+        </div>
+        <div class="form-group">
+          <label for="register-email">Email Address</label>
+          <input type="email" id="register-email" placeholder="you@example.com" style="background: var(--bg-tertiary); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: var(--radius-md); color: #fff; outline: none; font-family: var(--font-body); font-size: 0.85rem;">
+        </div>
+        <div class="form-group">
+          <label for="register-password">Password</label>
+          <input type="password" id="register-password" placeholder="Choose a strong password">
+        </div>
+        <button class="btn btn-primary" id="btn-register-execute" style="width: 100%; margin-top: 14px;">Sign Up</button>
+        <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 14px;">Already have an account? <a href="#" id="link-to-login" style="color: var(--primary-hover); text-decoration: none; font-weight: 600;">Sign In</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- JavaScript Modules -->
+  <script src="app.js"></script>
+</body>
+</html>
