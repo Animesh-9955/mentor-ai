@@ -212,7 +212,8 @@ const UI = {
   loginPass: document.getElementById('login-password'),
   registerUser: document.getElementById('register-username'),
   registerEmail: document.getElementById('register-email'),
-  registerPass: document.getElementById('register-password')
+  registerPass: document.getElementById('register-password'),
+  btnLogout: document.getElementById('btn-logout')
 };
 
 // ==========================================
@@ -1059,6 +1060,15 @@ function initAuthModal() {
     e.preventDefault();
     UI.authRegisterView.style.display = 'none';
     UI.authLoginView.style.display = 'block';
+  });
+
+  // Logout handler
+  UI.btnLogout.addEventListener('click', () => {
+    state.authToken = '';
+    localStorage.removeItem('mentorai_token');
+    showToast("Logged out successfully!", "success");
+    switchView('dashboard');
+    UI.modalAuth.classList.add('active');
   });
 
   // Login handler

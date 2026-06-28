@@ -234,6 +234,33 @@ body {
   height: 18px;
 }
 
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.20);
+  border-radius: var(--radius-md);
+  color: #ef4444;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: rgba(239, 68, 68, 0.16);
+  border-color: rgba(239, 68, 68, 0.40);
+  color: #f87171;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.20);
+}
+
+.logout-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+
 .user-pill {
   display: flex;
   align-items: center;
