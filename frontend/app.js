@@ -331,7 +331,7 @@ function switchView(viewName) {
   };
   
   UI.viewTitle.textContent = viewName === 'vault' ? 'Vault & Slides' : viewName.charAt(0).toUpperCase() + viewName.slice(1);
-  if (viewName === 'tutor') UI.viewTitle.textContent = "AI Teacher Studio";
+  if (viewName === 'tutor') UI.viewTitle.textContent = "AI Teacher";
   if (viewName === 'router') UI.viewTitle.textContent = "Multi-LLM Router Console";
   
   UI.viewSubtitle.textContent = subtitles[viewName] || "MentorAI Personal Teacher Dashboard";
